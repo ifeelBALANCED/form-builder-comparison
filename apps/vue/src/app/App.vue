@@ -11,6 +11,9 @@ const isPreview = computed(() => route.name === 'Preview');
 const goPreview = () => router.push({ name: 'Preview' });
 const goBuilder = () => router.push({ name: 'Editor' });
 const goSave = () => {};
+
+URL.revokeObjectURL()
+
 </script>
 
 <template>
