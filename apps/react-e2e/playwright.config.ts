@@ -24,7 +24,7 @@ export default defineConfig({
   },
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'bun nx run form-builder-react:preview',
+    command: 'bun nx run react:preview',
     url: 'http://localhost:4200',
     reuseExistingServer: true,
     cwd: workspaceRoot,

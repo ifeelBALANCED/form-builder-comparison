@@ -1,20 +1,20 @@
 /// <reference types='vitest' />
 import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue';
-import { fileURLToPath, URL } from 'node:url';
+import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig(() => ({
   root: __dirname,
-  cacheDir: '../../node_modules/.vite/apps/vue',
+  cacheDir: '../../node_modules/.vite/apps/react',
   server: {
     port: 4200,
     host: 'localhost',
   },
   preview: {
-    port: 4300,
+    port: 4200,
     host: 'localhost',
   },
-  plugins: [vue()],
+  plugins: [react(), tailwindcss()],
   // Uncomment this if you are using workers.
   // worker: {
   //  plugins: [ nxViteTsPaths() ],
@@ -25,11 +25,6 @@ export default defineConfig(() => ({
     reportCompressedSize: true,
     commonjsOptions: {
       transformMixedEsModules: true,
-    },
-  },
-  resolve: {
-    alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
   test: {
