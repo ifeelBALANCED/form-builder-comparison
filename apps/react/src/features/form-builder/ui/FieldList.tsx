@@ -1,7 +1,12 @@
 import { useAtom, useSetAtom } from 'jotai';
-import { clearAllFieldsAtom, updateFieldAtom, removeFieldAtom, moveFieldAtom, duplicateFieldAtom } from '../model/store';
-import { formFieldsAtom} from '../model/atoms/formBuilder';
-import { uniqueId } from '../../../shared/lib/unique-id';
+import {
+  clearAllFieldsAtom,
+  updateFieldAtom,
+  removeFieldAtom,
+  moveFieldAtom,
+  duplicateFieldAtom,
+  formFieldsAtom,
+} from '../model';
 import * as Checkbox from '@radix-ui/react-checkbox';
 import {
   CheckIcon,
@@ -13,7 +18,8 @@ import {
   CopyIcon,
   TrashIcon as DeleteIcon,
 } from '@radix-ui/react-icons';
-import type { Field } from '../../../shared/types';
+import type { Field } from '@/shared/types';
+import { uniqueId } from '@/shared/lib/unique-id';
 
 export const FieldList = () => {
   const [formFields] = useAtom(formFieldsAtom);
@@ -46,7 +52,8 @@ export const FieldList = () => {
   if (!fieldsArray.length) {
     return (
       <div className="h-full flex items-center justify-center text-gray-500">
-        No form fields added yet. Use the panel on the left to add form elements.
+        No form fields added yet. Use the panel on the left to add form
+        elements.
       </div>
     );
   }

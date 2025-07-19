@@ -1,3 +1,3 @@
-import { FormBuilder } from '../widgets/form-builder';
+import { FormBuilder } from '@/widgets/form-builder';
 
-export const EditorPage = () => <FormBuilder />
+export const EditorPage = () => <FormBuilder />;

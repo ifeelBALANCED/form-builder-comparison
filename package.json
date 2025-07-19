@@ -4,12 +4,12 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "start:react": "nx serve form-builder-react",
-    "start:vue": "nx serve form-builder-vue",
-    "unit:all": "nx run-many --target=test --projects=form-builder-react,form-builder-vue",
-    "e2e:all": "nx run-many --target=e2e --projects=form-builder-react-e2e,form-builder-vue-e2e",
-    "lint:all": "nx run-many --target=lint --projects=form-builder-react,form-builder-vue",
-    "build:all": "nx run-many --target=build --projects=form-builder-react,form-builder-vue"
+    "start:react": "nx serve react",
+    "start:vue": "nx serve vue",
+    "unit:all": "nx run-many --target=test --projects=react,vue",
+    "e2e:all": "nx run-many --target=e2e --projects=react-e2e,vue-e2e",
+    "lint:all": "nx run-many --target=lint --projects=react,vue",
+    "build:all": "nx run-many --target=build --projects=react,vue"
   },
   "private": true,
   "dependencies": {

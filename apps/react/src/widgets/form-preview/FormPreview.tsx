@@ -1,10 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useAtomValue } from 'jotai';
-import { formFieldsAtom, builderTitleAtom, builderDescriptionAtom } from '../../features/form-builder/model/atoms/formBuilder';
 import { useNavigate } from 'react-router-dom';
 import * as Checkbox from '@radix-ui/react-checkbox';
 import { CheckIcon } from '@radix-ui/react-icons';
 import { Icon } from '@iconify/react';
+import {
+  builderDescriptionAtom,
+  builderTitleAtom,
+  formFieldsAtom,
+} from '@/features/form-builder';
 
 export const FormPreview = () => {
   const navigate = useNavigate();
@@ -52,13 +56,17 @@ export const FormPreview = () => {
     if (!isFormValid) return;
     navigate({
       pathname: '/success',
-      search: new URLSearchParams(data as Record<string, string>).toString()
+      search: new URLSearchParams(data as Record<string, string>).toString(),
     });
   };
 
-  const onCheckboxChange = (fieldId: string, label: string, checked: boolean) => {
-    setData(prev => {
-      const arr = [...(prev[fieldId] as string[] || [])];
+  const onCheckboxChange = (
+    fieldId: string,
+    label: string,
+    checked: boolean,
+  ) => {
+    setData((prev) => {
+      const arr = [...((prev[fieldId] as string[]) || [])];
       const idx = arr.indexOf(label);
       if (checked && idx === -1) arr.push(label);
       if (!checked && idx > -1) arr.splice(idx, 1);
@@ -67,7 +75,7 @@ export const FormPreview = () => {
   };
 
   const handleTextChange = (fieldId: string, value: string) => {
-    setData(prev => ({ ...prev, [fieldId]: value }));
+    setData((prev) => ({ ...prev, [fieldId]: value }));
   };
 
   if (!fieldsArray.length) {
@@ -91,7 +99,7 @@ export const FormPreview = () => {
       </header>
 
       <form className="space-y-6" onSubmit={onSubmit}>
-        {fieldsArray.map(field => (
+        {fieldsArray.map((field) => (
           <div key={field.id} className="mb-6">
             <label htmlFor={field.id} className="block mb-2 font-medium">
               {field.label}
@@ -101,11 +109,13 @@ export const FormPreview = () => {
             {field.type === 'text' && (
               <input
                 id={field.id}
-                value={data[field.id] as string || ''}
-                onChange={e => handleTextChange(field.id, e.target.value)}
+                value={(data[field.id] as string) || ''}
+                onChange={(e) => handleTextChange(field.id, e.target.value)}
                 type="text"
                 placeholder={field.placeholder}
-                aria-invalid={field.required && !(data[field.id] as string)?.trim()}
+                aria-invalid={
+                  field.required && !(data[field.id] as string)?.trim()
+                }
                 className="w-full border rounded px-3 py-2 focus:ring-primary"
               />
             )}
@@ -113,11 +123,13 @@ export const FormPreview = () => {
             {field.type === 'textarea' && (
               <textarea
                 id={field.id}
-                value={data[field.id] as string || ''}
-                onChange={e => handleTextChange(field.id, e.target.value)}
+                value={(data[field.id] as string) || ''}
+                onChange={(e) => handleTextChange(field.id, e.target.value)}
                 placeholder={field.placeholder}
                 rows={4}
-                aria-invalid={field.required && !(data[field.id] as string)?.trim()}
+                aria-invalid={
+                  field.required && !(data[field.id] as string)?.trim()
+                }
                 className="w-full border rounded px-3 py-2 focus:ring-primary"
               />
             )}
@@ -125,13 +137,15 @@ export const FormPreview = () => {
             {field.type === 'select' && (
               <select
                 id={field.id}
-                value={data[field.id] as string || ''}
-                onChange={e => handleTextChange(field.id, e.target.value)}
+                value={(data[field.id] as string) || ''}
+                onChange={(e) => handleTextChange(field.id, e.target.value)}
                 aria-invalid={field.required && !(data[field.id] as string)}
                 className="w-full border rounded px-3 py-2 focus:ring-primary"
               >
-                <option disabled value="">Select an option</option>
-                {field.options?.map(opt => (
+                <option disabled value="">
+                  Select an option
+                </option>
+                {field.options?.map((opt) => (
                   <option key={opt.id} value={opt.label}>
                     {opt.label}
                   </option>
@@ -141,8 +155,10 @@ export const FormPreview = () => {
 
             {field.type === 'checkbox' && (
               <div className="flex flex-wrap gap-4">
-                {field.options?.map(opt => {
-                  const isChecked = (data[field.id] as string[] || []).includes(opt.label);
+                {field.options?.map((opt) => {
+                  const isChecked = (
+                    (data[field.id] as string[]) || []
+                  ).includes(opt.label);
                   return (
                     <div key={opt.id} className="flex items-center">
                       <Checkbox.Root
@@ -158,7 +174,10 @@ export const FormPreview = () => {
                           <CheckIcon className="w-3 h-3 text-primary" />
                         </Checkbox.Indicator>
                       </Checkbox.Root>
-                      <label htmlFor={`${field.id}-${opt.id}`} className="ml-2 text-sm">
+                      <label
+                        htmlFor={`${field.id}-${opt.id}`}
+                        className="ml-2 text-sm"
+                      >
                         {opt.label}
                       </label>
                     </div>
@@ -181,5 +200,3 @@ export const FormPreview = () => {
     </div>
   );
 };
-
-export default FormPreview;

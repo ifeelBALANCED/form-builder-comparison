@@ -1,45 +1,13 @@
-import './styles.css';
-import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
-import FormBuilder from '../widgets/form-builder/FormBuilder';
-import FormPreview from '../widgets/form-preview/FormPreview';
-import SuccessPage from '../pages/SuccessPage';
-
 import * as Toolbar from '@radix-ui/react-toolbar';
 import {
-  FileTextIcon as FormIcon,
   ArrowLeftIcon,
   DownloadIcon as SaveIcon,
   EyeOpenIcon,
+  FileTextIcon as FormIcon,
 } from '@radix-ui/react-icons';
+import { useFormRouter } from '@/shared/lib/useFormRouter';
 
-import { useMemo, useCallback } from 'react';
-
-export function useFormRouter() {
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
-
-  const isPreview = useMemo(() => pathname === '/preview', [pathname]);
-
-  const goPreview = useCallback(() => {
-    navigate('/preview');
-  }, [navigate]);
-
-  const goBuilder = useCallback(() => {
-    navigate('/editor');
-  }, [navigate]);
-
-  const goSave = useCallback(() => {
-    // TODO: ваша логіка збереження
-    console.log('save form');
-  }, []);
-
-  return useMemo(
-    () => ({ isPreview, goPreview, goBuilder, goSave }),
-    [isPreview, goPreview, goBuilder, goSave],
-  );
-}
-
-const Header = () => {
+export const Header = () => {
   const { isPreview, goPreview, goBuilder, goSave } = useFormRouter();
 
   return (
@@ -70,7 +38,7 @@ const Header = () => {
               </Toolbar.Button>
               <Toolbar.Button
                 onClick={goPreview}
-                className="inline-flex items-center gap-2 px-4 py-2 border border-primary rounded text-primary hover:bg-primary/10 focus:outline-none focus:ring-2 focus:ring-primary"
+                className="inline-flex items-center gap-2 px-4 py-2 border border-gray-300 rounded text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary"
               >
                 <EyeOpenIcon className="w-5 h-5" aria-hidden="true" />
                 <span>Preview Form</span>
@@ -82,21 +50,3 @@ const Header = () => {
     </Toolbar.Root>
   );
 };
-
-export const App = () => {
-  return (
-    <>
-      <Header />
-      <div className="container mx-auto py-8 px-4">
-        <Routes>
-          <Route path="/" element={<FormBuilder />} />
-          <Route path="/editor" element={<FormBuilder />} />
-          <Route path="/preview" element={<FormPreview />} />
-          <Route path="/success" element={<SuccessPage />} />
-        </Routes>
-      </div>
-    </>
-  );
-};
-
-export default App;

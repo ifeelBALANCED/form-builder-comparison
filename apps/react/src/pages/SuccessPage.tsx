@@ -15,9 +15,7 @@ export const SuccessPage = () => {
       <h2 className="text-2xl font-bold mb-2">Form submitted successfully!</h2>
       <p className="text-gray-600 mb-6">Thank you for your submission.</p>
 
-      <pre
-        className="bg-gray-100 text-sm p-4 rounded w-full max-w-md text-left overflow-auto"
-      >
+      <pre className="bg-gray-100 text-sm p-4 rounded w-full max-w-md text-left overflow-auto">
         {JSON.stringify(queryParams, null, 2)}
       </pre>
 
@@ -33,5 +31,3 @@ export const SuccessPage = () => {
     </div>
   );
 };
-
-export default SuccessPage;

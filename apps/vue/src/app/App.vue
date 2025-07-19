@@ -3,14 +3,16 @@ import { useRouter, useRoute } from 'vue-router';
 import { ToolbarRoot, ToolbarButton } from 'radix-vue';
 import { Icon } from '@iconify/vue';
 import { computed } from 'vue';
+import { formBuilderModel } from '@/features/form-builder';
 
+const formBuilder = formBuilderModel.useFormBuilder();
 const router = useRouter();
 const route = useRoute();
 
 const isPreview = computed(() => route.name === 'Preview');
 const goPreview = () => router.push({ name: 'Preview' });
 const goBuilder = () => router.push({ name: 'Editor' });
-const goSave = () => {};
+const goSave = () => formBuilder.saveSchema();
 </script>
 
 <template>

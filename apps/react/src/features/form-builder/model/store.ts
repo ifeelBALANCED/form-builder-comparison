@@ -1,21 +1,7 @@
 import { atom } from 'jotai';
-import {
-  builderTitleAtom,
-  builderDescriptionAtom,
-  formFieldsAtom
-} from './atoms/formBuilder';
-import type { Field, FieldType } from '../../../shared/types';
-import { uniqueId } from '../../../shared/lib/unique-id';
-
-// Actions
-
-export const setBuilderTitleAtom = atom(null, (get, set, title: string) => {
-  set(builderTitleAtom, title);
-});
-
-export const setBuilderDescriptionAtom = atom(null, (get, set, desc: string) => {
-  set(builderDescriptionAtom, desc);
-});
+import { formFieldsAtom } from './atoms/formBuilder';
+import type { Field, FieldType } from '@/shared/types';
+import { uniqueId } from '@/shared/lib/unique-id';
 
 export const addFieldAtom = atom(null, (get, set, type: FieldType) => {
   const id = uniqueId();
@@ -23,7 +9,8 @@ export const addFieldAtom = atom(null, (get, set, type: FieldType) => {
     id,
     type,
     label: `New ${type} field`,
-    placeholder: type === 'text' || type === 'textarea' ? `Enter ${type}` : undefined,
+    placeholder:
+      type === 'text' || type === 'textarea' ? `Enter ${type}` : undefined,
     options: type === 'select' || type === 'checkbox' ? [] : undefined,
     required: false,
   };
@@ -67,19 +54,22 @@ export const clearAllFieldsAtom = atom(null, (_, set) => {
   set(formFieldsAtom, new Map());
 });
 
-export const moveFieldAtom = atom(null, (get, set, { fromId, toId }: { fromId: string, toId: string }) => {
-  const entries = Array.from(get(formFieldsAtom).entries());
-  const fromIndex = entries.findIndex(([id]) => id === fromId);
-  const toIndex = entries.findIndex(([id]) => id === toId);
-  if (fromIndex === -1 || toIndex === -1) return;
+export const moveFieldAtom = atom(
+  null,
+  (get, set, { fromId, toId }: { fromId: string; toId: string }) => {
+    const entries = Array.from(get(formFieldsAtom).entries());
+    const fromIndex = entries.findIndex(([id]) => id === fromId);
+    const toIndex = entries.findIndex(([id]) => id === toId);
+    if (fromIndex === -1 || toIndex === -1) return;
 
-  const [moved] = entries.splice(fromIndex, 1);
-  entries.splice(toIndex, 0, moved);
+    const [moved] = entries.splice(fromIndex, 1);
+    entries.splice(toIndex, 0, moved);
 
-  const newFields = new Map<string, Field>();
-  for (const [id, field] of entries) {
-    newFields.set(id, field);
-  }
+    const newFields = new Map<string, Field>();
+    for (const [id, field] of entries) {
+      newFields.set(id, field);
+    }
 
-  set(formFieldsAtom, newFields);
-});
+    set(formFieldsAtom, newFields);
+  },
+);

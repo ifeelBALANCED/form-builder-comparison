@@ -78,6 +78,24 @@ export const useFormBuilder = defineStore('formBuilder', () => {
     () => builderTitle.value.trim() !== '' && formFields.size > 0,
   );
 
+  const saveSchema = () => {
+    const schema = {
+      title: builderTitle.value,
+      description: builderDescription.value,
+      fields: fieldsArray.value,
+    };
+
+    const blob = new Blob([JSON.stringify(schema)], {
+      type: 'application/json',
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${builderTitle.value}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   return {
     builderTitle,
     builderDescription,
@@ -94,5 +112,6 @@ export const useFormBuilder = defineStore('formBuilder', () => {
     hasFields,
     requiredFieldsCount,
     isFormValid,
+    saveSchema,
   };
 });

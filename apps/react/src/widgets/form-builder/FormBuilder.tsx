@@ -1,10 +1,16 @@
 import { useAtom } from 'jotai';
-import { FieldList, Toolbox } from '../../features/form-builder';
-import { builderTitleAtom, builderDescriptionAtom } from '../../features/form-builder/model/atoms/formBuilder';
+import {
+  builderDescriptionAtom,
+  builderTitleAtom,
+  FieldList,
+  Toolbox,
+} from '@/features/form-builder';
 
 export const FormBuilder = () => {
   const [builderTitle, setBuilderTitle] = useAtom(builderTitleAtom);
-  const [builderDescription, setBuilderDescription] = useAtom(builderDescriptionAtom);
+  const [builderDescription, setBuilderDescription] = useAtom(
+    builderDescriptionAtom,
+  );
 
   return (
     <div className="grid grid-cols-3 gap-6">
@@ -40,5 +46,3 @@ export const FormBuilder = () => {
     </div>
   );
 };
-
-export default FormBuilder;

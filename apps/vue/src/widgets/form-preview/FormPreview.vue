@@ -25,13 +25,13 @@ watch(
 
 const hasFields = computed(() => formBuilder.fieldsArray.length > 0);
 const isFormValid = computed(() =>
-  formBuilder.fieldsArray.every((f) => {
-    if (!f.required) return true;
-    const val = data[f.id];
-    return f.type === 'checkbox'
-      ? (val as string[]).length > 0
-      : !!(val as string).trim();
-  }),
+  formBuilder.fieldsArray.every(
+    (f) =>
+      !f.required ||
+      (f.type === 'checkbox' && Array.isArray(data[f.id])
+        ? data[f.id].length > 0
+        : Boolean(data[f.id]?.toString().trim())),
+  ),
 );
 
 function onSubmit() {

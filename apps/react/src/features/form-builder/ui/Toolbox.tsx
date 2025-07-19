@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react';
 import { useSetAtom } from 'jotai';
-import { addFieldAtom } from '../model/store';
+import { addFieldAtom } from '../model';
 
 const FIELD_VARIANTS = [
   { type: 'text', icon: 'mdi:format-letter-case-upper', label: 'Text' },
