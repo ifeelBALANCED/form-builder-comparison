@@ -7,11 +7,11 @@
       "vitest/importMeta",
       "vite/client",
       "node",
-      "vitest"
+      "vitest",
+      "@nx/react/typings/cssmodule.d.ts",
+      "@nx/react/typings/image.d.ts"
     ],
-    "jsx": "preserve",
-    "jsxImportSource": "vue",
-    "resolveJsonModule": true
+    "jsx": "react-jsx"
   },
   "include": [
     "vite.config.mts",
@@ -26,8 +26,7 @@
     "src/**/*.spec.js",
     "src/**/*.test.jsx",
     "src/**/*.spec.jsx",
-    "src/**/*.d.ts",
-    "src/**/*.vue"
+    "src/**/*.d.ts"
   ],
   "references": [
     {
