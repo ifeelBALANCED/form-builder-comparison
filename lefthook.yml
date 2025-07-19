@@ -1,42 +1,41 @@
-# EXAMPLE USAGE:
-#
-#   Refer for explanation to following link:
-#   https://lefthook.dev/configuration/
-#
-# pre-push:
-#   jobs:
-#     - name: packages audit
-#       tags:
-#         - frontend
-#         - security
-#       run: yarn audit
-#
-#     - name: gems audit
-#       tags:
-#         - backend
-#         - security
-#       run: bundle audit
-#
-# pre-commit:
-#   parallel: true
-#   jobs:
-#     - run: yarn eslint {staged_files}
-#       glob: "*.{js,ts,jsx,tsx}"
-#
-#     - name: rubocop
-#       glob: "*.rb"
-#       exclude:
-#         - config/application.rb
-#         - config/routes.rb
-#       run: bundle exec rubocop --force-exclusion {all_files}
-#
-#     - name: govet
-#       files: git ls-files -m
-#       glob: "*.go"
-#       run: go vet {files}
-#
-#     - script: "hello.js"
-#       runner: node
-#
-#     - script: "hello.go"
-#       runner: go run
+colors: true
+skip_output: [meta, success]
+
+pre-commit:
+  parallel: true
+  commands:
+    lint:
+      glob: '*.{ts,tsx,vue,js,jsx}'
+      run: |
+        echo "🔍 Linting code..."
+        bun run lint:all
+      skip: [merge, rebase]
+
+    typecheck:
+      glob: '*.{ts,tsx,vue}'
+      run: |
+        echo "🔎 Type checking..."
+        bun run type-check
+      skip: [merge, rebase]
+
+    format:
+      glob: '*.{ts,tsx,vue,js,jsx,json,md,yml,yaml}'
+      run: |
+        echo "💅 Checking code formatting..."
+        bun run format:check
+      skip: [merge, rebase]
+
+    test:
+      glob: '*.{ts,tsx,vue}'
+      run: |
+        echo "🧪 Running unit tests..."
+        bun run unit:all
+      skip: [merge, rebase]
+
+commit-msg:
+  parallel: true
+  commands:
+    commitlint:
+      run: |
+        echo "📝 Validating commit message..."
+        bun run commitlint --edit "$1"
